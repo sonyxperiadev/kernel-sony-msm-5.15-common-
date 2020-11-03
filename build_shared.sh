@@ -49,7 +49,12 @@ for platform in $PLATFORMS; do \
             dtb="-dtb"
         fi
 
-        KERNEL_TMP_PLATFORM=$KERNEL_TMP/${platform}
+        # Don't override $KERNEL_TMP when set by manually
+        if [ ! "$build_directory" ] ; then
+            KERNEL_TMP_PLATFORM=$KERNEL_TMP/${platform}
+        else
+            KERNEL_TMP_PLATFORM=${build_directory}
+        fi
         BUILD_ARGS_PLATFORM="$BUILD_ARGS O=$KERNEL_TMP_PLATFORM"
 
         # Keep kernel tmp when building for a specific platform or when using keep tmp
